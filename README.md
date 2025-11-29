@@ -309,13 +309,10 @@ Khuyến nghị:
 - [74HC244 Datasheet](https://www. ti.com/lit/ds/symlink/sn74hc244.pdf)
 - [ESP32 Datasheet](https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf)
 
-## License
-[Cập nhật license của bạn]
-
 ## Tác giả
 - Designer: Huybuideeptry
 - Tool: EasyEDA
 - Version: 1.0
 
 ---
-**Made with ❤️ for high-power motor control**
+**Made with ❤️ and lack of ☕ for high-power motor control**
