@@ -74,35 +74,44 @@ GPIO_DIR1    ────▶    2A ──▶ 2Y   ────▶  LPWM_1
 GPIO_PWM2    ────▶    3A ──▶ 3Y   ────▶  RPWM_2
 GPIO_DIR2    ────▶    4A ──▶ 4Y   ────▶  LPWM_2
 ... 
-```
+```  
 
 ### 4. ESP32 (ESP32-WROOM-32)
 **Chân GPIO sử dụng:**
 
 ```cpp
 // Motor Control (thông qua 74HC244D)
-#define MOTOR1_RPWM  GPIO_XX
-#define MOTOR1_LPWM  GPIO_XX
-#define MOTOR2_RPWM  GPIO_XX
-#define MOTOR2_LPWM  GPIO_XX
-#define MOTOR3_RPWM  GPIO_XX
-#define MOTOR3_LPWM  GPIO_XX
-#define MOTOR4_RPWM  GPIO_XX
-#define MOTOR4_LPWM  GPIO_XX
+#define MOTOR1_RPWM  GPIO_32
+#define MOTOR1_LPWM  GPIO_23
+#define MOTOR2_RPWM  GPIO_13
+#define MOTOR2_LPWM  GPIO_05
+#define MOTOR3_RPWM  GPIO_12
+#define MOTOR3_LPWM  GPIO_26
+#define MOTOR4_RPWM  GPIO_15
+#define MOTOR4_LPWM  GPIO_04
 
+// ANALOG Sensor
+#define A0           GPIO_14
+#define A1           GPIO_34
+#define A2           GPIO_25
+#define A3           GPIO_33
+#define A4           GPIO_27
+#define A5           GPIO_35
+#define A6           GPIO_36
+#define A7           GPIO_39
 // Enable pins (có thể dùng chung hoặc riêng)
-#define MOTOR_EN     GPIO_XX
-
-// Encoder/Hall sensor inputs
-#define ENCODER1_A   GPIO_XX
-#define ENCODER1_B   GPIO_XX
-// ... tương tự cho các encoder khác
+đã kéo lên mức HIGH (luôn enable)
 
 // Communication
-#define SERIAL_TX    GPIO_1
-#define SERIAL_RX    GPIO_3
-#define I2C_SDA      GPIO_21
-#define I2C_SCL      GPIO_22
+#define SERIAL_TX    GPIO_17
+#define SERIAL_RX    GPIO_16
+#define I2C_SDA      GPIO_21 ( CHỈ DÙNG NẾU KHÔNG DÙNG SERVO 3 VÀ 4)
+#define I2C_SCL      GPIO_22 ( CHỈ DÙNG NẾU KHÔNG DÙNG SERVO 3 VÀ 4)
+#dedine Servo_1      GPIO_18
+#dedine Servo_2      GPIO_19
+#dedine Servo_3      GPIO_21
+#dedine Servo_4      GPIO_22
+
 ```
 
 ### 5. EX PIN (Đầu nối mở rộng)
@@ -163,11 +172,8 @@ const int pwmFreq = 15000;  // 15kHz
 const int pwmResolution = 8; // 8-bit (0-255)
 
 // Motor 1
-const int M1_RPWM_PIN = 25;
-const int M1_LPWM_PIN = 26;
-const int M1_R_EN = 27;
-const int M1_L_EN = 14;
-
+const int M1_RPWM_PIN = 32;
+const int M1_LPWM_PIN = 13;
 void setup() {
   // Cấu hình PWM channels
   ledcSetup(0, pwmFreq, pwmResolution); // Channel 0 for M1_RPWM
@@ -175,12 +181,6 @@ void setup() {
   
   ledcAttachPin(M1_RPWM_PIN, 0);
   ledcAttachPin(M1_LPWM_PIN, 1);
-  
-  // Enable pins
-  pinMode(M1_R_EN, OUTPUT);
-  pinMode(M1_L_EN, OUTPUT);
-  digitalWrite(M1_R_EN, HIGH);
-  digitalWrite(M1_L_EN, HIGH);
 }
 
 void motorControl(int speed) {
